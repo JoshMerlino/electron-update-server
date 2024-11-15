@@ -1,12 +1,6 @@
-// Start an http server on port 8000
+import { Glob } from "bun";
+import { Server } from "./src/class/Server";
 
-import { serve } from "bun";
+for await (const file of new Glob("./src/api/**/*.ts").scan()) await import(file);
 
-serve({
-	port: 8000,
-	fetch(req) {
-		const url = new URL(req.url);
-		if (url.pathname === "/") return new Response("Home page");
-		return new Response("404!");
-	},
-});
+await Server.start();
