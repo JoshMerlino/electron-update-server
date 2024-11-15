@@ -48,10 +48,11 @@ jobs:
           git push || true
 
   docker:
-    name: Docker
+    name: Build and Deploy Docker Image
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    needs:
+      - version
+      - lint
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -69,8 +70,12 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: "Build Docker Image"
-        run: docker build . -t jmer05/electron-update-server:latest
+      - name: Build Docker Image
+        run: |
+          docker build . -t jmer05/electron-update-server:latest \
+                         -t jmer05/electron-update-server:${{ github.sha }}
 
-      - name: "Push Docker Image"
-        run: docker push jmer05/electron-update-server:latest
+      - name: Push Docker Image
+        run: |
+          docker push jmer05/electron-update-server:latest
+          docker push jmer05/electron-update-server:${{ github.sha }}

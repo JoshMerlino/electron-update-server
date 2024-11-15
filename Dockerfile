@@ -14,7 +14,7 @@ RUN bun install
 COPY . .
 
 # Expose the port your server listens on
-EXPOSE 3000
+EXPOSE 8000
 
 # Start the Bun server
 CMD ["bun", "index.ts"]
