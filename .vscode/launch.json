@@ -1,0 +1,13 @@
+{
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Bun",
+            "program": ".",
+            "runtimeExecutable": "bun",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
