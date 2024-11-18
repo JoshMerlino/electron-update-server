@@ -4,13 +4,20 @@ import { GithubClient } from "../class/GithubClient";
 import { Server } from "../class/Server";
 import { streamToAsyncIterable } from "../utils";
 
-Server.GET("/download/:filename", async function(req, res) {
+Server.GET("/download/:channel/:filename", async function(req, res) {
 	
 	const release = await GithubClient.octokit.rest.repos.listReleases({
 		owner: GithubClient.OWNER,
 		repo: GithubClient.REPO,
 	}).then(response => response.data)
 		.then(releases => releases.sort((a, b) => semver.rcompare(a.tag_name, b.tag_name)))
+
+		// Filter releases by channel
+		.then(releases => releases.filter(release => {
+			const channel = release.tag_name.includes("-") ? release.tag_name.split("-")[1] : "stable";
+			return channel === req.params.channel;
+		}))
+
 		.then(releases => releases.find(release => release.assets.some(asset => asset.name.toLowerCase() === req.params.filename.toLowerCase())));
 	
 	const asset = release?.assets.find(asset => asset.name.toLowerCase() === req.params.filename.toLowerCase());
