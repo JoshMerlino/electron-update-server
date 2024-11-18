@@ -13,11 +13,8 @@ Server.GET("/download/:filename", async function(req, res) {
 		.then(releases => releases.sort((a, b) => semver.rcompare(a.tag_name, b.tag_name)))
 		.then(releases => releases.find(release => release.assets.some(asset => asset.name.toLowerCase() === req.params.filename.toLowerCase())));
 	
-	if (!release) return res.status(404).json({ error: "No release found" });
-
-	// Get the release manifest
-	const asset = release.assets.find(asset => asset.name.toLowerCase() === req.params.filename.toLowerCase());
-	if (!asset) throw new Error("No manifest found");
+	const asset = release?.assets.find(asset => asset.name.toLowerCase() === req.params.filename.toLowerCase());
+	if (!release || !asset) return res.status(404).json({ error: "No release found" });
 		
 	const url = await GithubClient.octokit.repos.getReleaseAsset({
 		asset_id: asset.id,
@@ -26,7 +23,7 @@ Server.GET("/download/:filename", async function(req, res) {
 		headers: { accept: "application/octet-stream" },
 	}).then(response => response.url);
 
-	console.log(chalk.blue("[INFO]"), "Serving asset", chalk.cyan(asset.name), "from", chalk.cyan(release.tag_name));
+	console.log(chalk.blue("[INFO]"), "Serving", chalk.cyan(asset.name), "from release", chalk.cyan(release.tag_name));
 
 	res.setHeader("Content-Type", asset.content_type);
 	res.setHeader("Content-Size", asset.size.toString());
