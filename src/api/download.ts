@@ -9,6 +9,7 @@ Server.GET("/download/:channel/:filename", async function(req, res) {
 	const release = await GithubClient.octokit.rest.repos.listReleases({
 		owner: GithubClient.OWNER,
 		repo: GithubClient.REPO,
+		per_page: 1000,
 	}).then(response => response.data)
 		.then(releases => releases.sort((a, b) => semver.rcompare(a.tag_name, b.tag_name)))
 
