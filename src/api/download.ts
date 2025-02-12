@@ -19,6 +19,9 @@ Server.GET("/download/:channel/:filename", async function(req, res) {
 			return channel === req.params.channel;
 		}))
 
+		// Filter out unpublished releases
+		.then(releases => releases.filter(release => !release.draft))
+
 		.then(releases => releases.find(release => release.assets.some(asset => asset.name.toLowerCase() === req.params.filename.toLowerCase())));
 	
 	const asset = release?.assets.find(asset => asset.name.toLowerCase() === req.params.filename.toLowerCase());
