@@ -17,7 +17,7 @@
 	"peerDependencies": {
 		"typescript": "^5.0.0"
 	},
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"dependencies": {
 		"@octokit/rest": "^21.1.0",
 		"chalk": "^5.4.1",
