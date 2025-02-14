@@ -6,25 +6,25 @@
 		"lint": "eslint ."
 	},
 	"devDependencies": {
-		"@eslint/compat": "^1.2.3",
+		"@eslint/compat": "^1.2.6",
 		"@types/bun": "latest",
 		"@types/express": "^5.0.0",
-		"@types/lodash": "^4.17.13",
+		"@types/lodash": "^4.17.15",
 		"@types/semver": "^7.5.8",
-		"@typescript-eslint/eslint-plugin": "^8.14.0",
-		"eslint": "^9.14.0"
+		"@typescript-eslint/eslint-plugin": "^8.24.0",
+		"eslint": "^9.20.1"
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"
 	},
 	"version": "0.0.10",
 	"dependencies": {
-		"@octokit/rest": "^21.0.2",
-		"chalk": "^5.3.0",
-		"express": "^4.21.1",
+		"@octokit/rest": "^21.1.0",
+		"chalk": "^5.4.1",
+		"express": "^4.21.2",
 		"lodash": "^4.17.21",
-		"semver": "^7.6.3",
-		"yaml": "^2.6.0",
-		"zod": "^3.23.8"
+		"semver": "^7.7.1",
+		"yaml": "^2.7.0",
+		"zod": "^3.24.2"
 	}
 }
